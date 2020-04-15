@@ -1,24 +1,24 @@
-Markup :  #<-Django-> #
-##Set up Django Project ->##
+# <-Django-> #
+## Set up Django Project -> ##
 while installing django -  it installs command line tool django-admin
 to create Django project
 django-admin startproject first_project
  
-__init__.py => blank python file that dues its special name let’s python know that dir can be treated as package
-settings.py => where we store all project settings
- urls.py => python script that will store all the URL patterns for your project. Basically different pages of your applications
-wigs.py =>  python script that acts as a web server gateway interface. It will later on help us deploy our web application to production. 
+* __init__.py => blank python file that dues its special name let’s python know that dir can be treated as package
+* settings.py => where we store all project settings
+* urls.py => python script that will store all the URL patterns for your project. Basically different pages of your applications
+* wigs.py =>  python script that acts as a web server gateway interface. It will later on help us deploy our web application to production. 
 
-manage.py => used a lot, helps associate with many commands as we build our web apps
+* manage.py => used a lot, helps associate with many commands as we build our web apps
 
-##to run Django Server->##
+## to run Django Server->##
 python3 manage.py runserver
 
 A Django project is a collection of applications and configurations that when combined together will make up full web applications (your complete website running under django).
 A Django application is created to perform a particular functionality for your web application. For example, you may have a registration app, a polling app, comments app, etc.
 These Django apps can be plugged into the Django projects, they can be reused.
 
-##to  create Django app ->##
+## to  create Django app ->##
 python manage.py startapp first_app
 __init__.py => Blank python file that dues its special name let’s python know that dir can be treated as package
 admin.py => You can register your model here which Django will then use them with Django’s admin interface.

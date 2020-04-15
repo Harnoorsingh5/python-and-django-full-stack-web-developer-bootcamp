@@ -540,7 +540,8 @@ class FormName(forms.Form):
     #     return botcatcher
 ```
 
-email check
+### email check
+```
 from django.shortcuts import render
 from django.http import HttpResponse
 from basicapp import forms
@@ -566,17 +567,18 @@ def form_view(request):
 
 
     return render(request, 'basicapp/form_page.html', context={"form": form})
+```
 
 
-
-#MODEL FORMS:
+## MODEL FORMS:
 way to store the information into models/ DB
 
-—> instead of using forms.Forms class —> use forms.ModelForm class in forms.py file
+* —> instead of using forms.Forms class —> use forms.ModelForm class in forms.py file
 this helper class helps us to make forms out of existing  
 
 
-forms.py // changes that need to be done
+* forms.py // changes that need to be done
+```
 from django import forms
 from user_list_app.models import Users
 
@@ -594,17 +596,18 @@ class SignUpForm(forms.ModelForm):
         model = Users
         fields = '__all__'
 
+```
 
-
-#Relative URLs with Templates:
+### Relative URLs with Templates:
 So far we have used anchor tags with an href we’ve passed in a hardcoded path to the file.
 This is a poor practice if we want our Django project to work on system
-
+```
 Usual :                                                                    <a href=“basic app/thankyou”> Thanks </a>
 Can be changed to :                                            <a href=“{% url 'thanku'%}”> Thanks </a>  —> where name=’thanks’ is in urls.py
 You could also just directly reference the view: <a href=“{% url ‘basic app.views.thankyou'%}”> Thanks </a> —> not used
-
-relative_template_url.html
+```
+* relative_template_url.html
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -625,8 +628,9 @@ relative_template_url.html
         </div>
     <body>
 </html>
-
-index.html
+```
+* index.html
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -644,9 +648,10 @@ index.html
         </div>
     <body>
 </html>
+```
 
-
-other.html
+* other.html
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -664,8 +669,10 @@ other.html
         </div>
     <body>
 </html>
+```
 
-views.py
+* views.py
+```
 from django.shortcuts import render
 
 # Create your views here.
@@ -681,8 +688,10 @@ def other(request):
 def relative(request):
     mydict= {"add_me": "This is relative_url_templates.html"}
     return render(request,"basic_app/relative_url_templates.html", context=mydict)
+```
 
-urls.py
+* urls.py
+```
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
@@ -693,8 +702,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('basic_app/', include('basic_app.urls')),
 ]
-
-urls.py
+```
+* urls.py
+```
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include,url
@@ -707,18 +717,19 @@ urlpatterns = [
     path('other/', views.other, name='other'),
     path('relative/', views.relative, name='relative'),
 ]
+```
 
 
 
-
-#URL Template Inheritance:
+### URL Template Inheritance:
 Main steps->
-Find the repetitive part of your project
-Create a base template for them
-Set tags in base template
-Extend and call the tags anywhere
+* Find the repetitive part of your project
+* Create a base template for them
+* Set tags in base template
+* Extend and call the tags anywhere
 
-—> base.html
+* —> base.html
+```
 	<link to JS, CSS, Bootstrap>
 	<bunch of html like navbars>
 		<body>
@@ -726,18 +737,20 @@ Extend and call the tags anywhere
 			{% endblock %}
 		</body>
 	</More footer html>
+```
 
-—> other.html
+* —> other.html
+```
 	<!DOCTYPE html>
 	{% extends “basic_app/base.html” %}
 	{% block body_block %}
 		<HTML specific for other.html>
 		<HTML specific for other.html>
 	{% endblock %}
-		
+```
 
-
-base.html
+* base.html
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -770,9 +783,10 @@ base.html
         </div>
     <body>
 </html>
+```
 
-other.html
-
+* other.html
+```
 <!DOCTYPE html>
 {% extends "basic_app/base.html" %}
 {% block body_block %}
@@ -782,9 +796,9 @@ other.html
         <p class="lead">{{add_me}}</p>
     </div>
 {% endblock %}
-
-index.html
-
+```
+* index.html
+```
 <!DOCTYPE html>
 {% extends 'basic_app/base.html' %}
 {% block body_block %}
@@ -794,14 +808,15 @@ index.html
         <p class="lead">{{add_me}}</p>
     </div>
 {% endblock %}
+```
 
 
-
-#Template filters and custom filters:
-
+### Template filters and custom filters:
+```
 inbuilt:
 <p class="lead">{{number|add:"99"}}</p>
-
+```
+```
 custom:
 make a new directory named “templatetags” in application directory, create two files in that dir - > namely, __init__.py and my_extras.py
 
@@ -819,9 +834,10 @@ def cut(value, arg):
     return value.replace(arg, '')
 
 # register.filter('cut',cut)
+```
 
-
-index.html
+* index.html
+```
 <!DOCTYPE html>
 {% extends 'basic_app/base.html' %}
 {% block body_block %}
@@ -834,8 +850,10 @@ index.html
         <p class="lead">{{number|add:"99"}}</p>
     </div>
 {% endblock %}
+```
 
-view.py
+* view.py
+```
 from django.shortcuts import render
 
 # Create your views here.
@@ -851,15 +869,16 @@ def other(request):
 def relative(request):
     mydict= {"add_me": "This is relative_url_templates.html"}
     return render(request,"basic_app/relative_url_templates.html", context=mydict)
+```
 
-
-#Django Passwords: (Sign Up Page)
-
+## Django Passwords: (Sign Up Page)
+```
 pip3 install crypt
 python -m pip install argon2-cffi
+```
 
-
-settings.py
+*settings.py
+```
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
@@ -897,23 +916,27 @@ STATICFILES_DIRS = [STATIC_DIR,]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
+```
 
 
 
-For images we use this fields type in our Model / DB ——>
+* For images we use this fields type in our Model / DB ——>
 
-“ImageField"
+* “ImageField"
+```
 In order to work with images in Python, we need to install the python image library
 pip3 install pillow
 pip3 install pillow —global -option=“build_ext” —global -option=“—disable-jpeg”
+```
 
 Setup your model - in models.py
 After setting model setup a user form - forms.py
 
 
-#FIlES changes for Registration page:
+* FIlES changes for Registration page:
 
-models.py
+* models.py
+```
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -929,10 +952,11 @@ class UserProfileInfo(models.Model):
 
     def __str__(self):
         return self.user.username
-
+```
     
 
-forms.py
+* forms.py
+```
 from django import forms
 from django.contrib.auth.models import User
 from basicapp import UserProfileInfo
@@ -949,9 +973,9 @@ class UserProfileInfoForm(forms.ModelForm):
         model = UserProfileInfo
         fields = ('portfolio_site', 'profile_pic')
 
-
-
-admin.py
+```
+* admin.py
+```
 from django.contrib import admin
 from basicapp.models import UserProfileInfo
 # Register your models here.
@@ -1009,10 +1033,10 @@ def registration(request):
              
     return render(request,'basicapp/registration.html',context={"user_form": user_form, "profile_form":profile_form, "registered":registered})
 
+```
 
-
-registration.html
-
+* registration.html
+```
 <!DOCTYPE html>
 {% extends 'basicapp/base.html' %}
 {% block body_block %}
@@ -1031,19 +1055,20 @@ registration.html
         {% endif %}
     </div>
 {% endblock %}
+```
 
-
-#FILES changed for login page
+## FILES changed for login page
 
 Process:
-Setting up login views.
-Using built in decorators for access.
-Adding the LOGIN_URL in settings.
-Creating the login.html
-Editing urls.py
+* Setting up login views.
+* Using built in decorators for access.
+* Adding the LOGIN_URL in settings.
+* Creating the login.html
+* Editing urls.py
 
 
-views.py —> add these eder files for setting up login functionality
+* views.py —> add these eder files for setting up login functionality
+```
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse  
@@ -1093,13 +1118,17 @@ using this @login_required decorator Django makes sure that logout page or the p
 page is only hit if the user is logged into the website
 make the task easy for programmers.
 '''
+```
 
-settings.py —> string up login url
+* settings.py —> string up login url
+```
 # LOGIN Settings
 LOGIN_URL = '/basicapp/user_login’
+```
 
 
-login.html
+* login.html
+```
 <!DOCTYPE html>
 {% extends 'basicapp/base.html' %}
 {% load static %}
@@ -1117,9 +1146,10 @@ login.html
             </form>
     </div>
 {% endblock %}
+```
 
-
-urls.py —>project’s url
+* urls.py —>project’s url
+```
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
@@ -1132,9 +1162,10 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('special/', views.special, name='special'),
 ]
+```
 
-
-urls.py —> application’s url
+* urls.py —> application’s url
+```
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
@@ -1147,28 +1178,37 @@ urlpatterns = [
     path('user_login/', views.user_login, name='user_login'),
     path('registration/', views.registration, name='registration'),
 ]
+```
 
-
-#DEPLOYING DJANGO WEBSITE:
+## DEPLOYING DJANGO WEBSITE:
 simple hosting:
 on —> pythonanywhere.com
 (Digital ocean or Heroku)
 
-Go to pythonanywhere.com -> go to console - bash
+* Go to pythonanywhere.com -> go to console - bash
+```
 	run ->> mk virtualenv —python=python3.7 myproj      (where myproj is name of venv)
               ->> pip install -U django==‘your version number'
-Get the link of git repository from GitHub.
+```
+* Get the link of git repository from GitHub.
+```
 	run  ->> git clone ’that link’
+```
 
-3.After cloning the repo you the server. Go to the project folder using cd commands
+* After cloning the repo you the server. Go to the project folder using cd commands
 Then make migration
+```
 		->>  python manage.py migrate
 		->> python manage.py makemigrations name_of_app
 		->> run it one more time:  python3 manage.py migrate --run-syncdb
+```
 Then create SUPER user
+```
 		->> python manage.py createsuperuser
+```
 
-4.Go to your dash board -> then go to WEB tab -> click on ‘Add  new web app’ (follow some instruction (click on manual configurations))
+* Go to your dash board -> then go to WEB tab -> click on ‘Add  new web app’ (follow some instruction (click on manual configurations))
+```
 Then do some manual config 
 add virtual env (enter path to it) —> /home/whatever name is of project/.virtulenvs/whatever you have named your env
 get ‘pwd’ of the project folder —> paste it in source code path 
@@ -1187,15 +1227,16 @@ give static files path (admin and your own)
 
 Go to settings.py and add ALLOWED_HOST=[ ’name of site or link of site’ ]
 Set DEGUG=False
+```
 
 
-
-#CLASS BASED VIEWS: (CBV)
+## CLASS BASED VIEWS: (CBV)
 Previously we used function based views. However, Django provides a very powerful OOP concept of
 class based views.
 
 
-urls.py ——>
+* urls.py ——>
+```
 from django.contrib import admin
 from django.urls import path,include
 from cbv_app import views
@@ -1204,10 +1245,9 @@ urlpatterns = [
     path('', views.CBView.as_view()),
     path('cbv_app/', include('cbv_app.urls'))
 ]
-
-
-views.py ——>
-
+```
+* views.py ——>
+```
 from django.views.generic import View # always import this 
 
 from django.shortcuts import render
@@ -1222,13 +1262,15 @@ class CBView(View):
     def get(self, request):
         return HttpResponse("Hello, this class based view")
 
+```
 
-#Template views with CBVs:
+* Template views with CBVs:
 
  difference between *args and **kwargs
     (kwargs - stand for keyword arguments)
 
-    *args - gives all the function parameters as a tuple
+ *   *args - gives all the function parameters as a tuple
+ ```
           - just like varibale arguments
             def foo(*args):
                 for a in args:
@@ -1237,17 +1279,19 @@ class CBView(View):
             foo(1,2,3) -> prints : 1 
 				   2 
 				   3
-    
-    **kwargs - gives keyword arguments,
+```
+
+ *   **kwargs - gives keyword arguments,
+ ```
              - gives you corresponding dictionaries, when you want to pass dictionaries as params
                def bar(**kwargs):
                    for a in kwargs:
                        print (a, kwargs[a])
                 bar(name="one", age=27) -> prints: age 27
-                                                   name one 
-
-
-view.py ——>
+                                                   name one
+```
+* view.py ——>
+```
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View,TemplateView
@@ -1267,11 +1311,11 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["add_me"] = 'Hello, this is index.html' 
         return context
-     
+```     
 
 
 
-#Detail View and List View:
+## Detail View and List View:
 We have learned about Class Based Views to directly show a template.
 
 Often when we have models, we want to either list the records from the model, or show details of a single record.
@@ -1281,10 +1325,8 @@ MyModel.objects.all()
 
 (one common practice - having template folder inside app’s folder)
 
-1)
-
-Create models first- 
-models.py
+* Create models first-  models.py
+```
 from django.db import models
 
 # Create your models here.
@@ -1304,39 +1346,43 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+```
 
-
-Register these models -
-admin.py
+* Register these models - admin.py
+```
 from django.contrib import admin
 from cbv_app.models import School,Student
 # Register your models here.
 
 admin.site.register(School)
 admin.site.register(Student)
+```
 
 
-
-Run these commands-
+* Run these commands-
+```
 ->>  python3 manage.py migrate
 ->> python3 manage.py makemigrations name_of_app
 ->> run it one more time:  python3 manage.py migrate --run-syncdb
 
 python3 manage.py createsuperuser
+```
 
-It is a common practice to make a template folder in each app (specific to each app)
-
+* It is a common practice to make a template folder in each app (specific to each app)
 (However, for common templates need to be placed in the templates folder outside of all other folders)
-
+```
 (app name)			(app name)
 /cbv_app/template/cbv_app (make dir structure like this)
-
-——> have created three .html files in this folder
+```
+* ——> have created three .html files in this folder
+```
 cbv_app_base.html
 school_detail.html
 school_list.html
+```
 
-changes in views.py—>
+* changes in views.py—>
+```
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View, TemplateView, ListView, DetailView
@@ -1387,10 +1433,11 @@ class SchoolListView(ListView):
 class SchoolDetailView(DetailView):
     model = models.School
     template_name = 'cbv_app/school_detail.html' 
+```
 
 
-
-changes in projects urls.py —>
+* changes in projects urls.py —>
+```
 from django.contrib import admin
 from django.urls import path,include
 from cbv_app import views
@@ -1399,9 +1446,10 @@ urlpatterns = [
     path('', views.IndexView.as_view()),
     path('cbv_app/', include('cbv_app.urls'))
 ]
+```
 
-
-changes is app’s urls.py —>
+* changes is app’s urls.py —>
+```
 from django.contrib import admin
 from django.urls import path,include
 from cbv_app import views
@@ -1416,8 +1464,9 @@ urlpatterns = [
 '''
     <int:pk>/ means that that it use the primary key of that model as the path to open the detail view of that particular item in list
 '''
-
-cbv_app_base.html
+```
+* cbv_app_base.html
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -1451,9 +1500,10 @@ cbv_app_base.html
 
     <body>
 </html>
+```
 
-
-school_list.html
+* school_list.html
+```
 <!DOCTYPE html>
 {% extends 'cbv_app/cbv_app_base.html' %}
 {% block body_block %}
@@ -1493,8 +1543,9 @@ school_list.html
 
         # my_dict = {'insert_one': "Hello this is my view"}
         return render(request, 'first_app/index.html', context = date_dict)
-
-- index.html
+```
+* index.html
+```
     <div class = "recordtable">
      {% if access_records %}
         <table>
@@ -1514,9 +1565,10 @@ school_list.html
      {% endif %}
     </div>
 -->
+```
 
-
-school_detail.html
+* school_detail.html
+```
 <!DOCTYPE html>
 {% extends 'cbv_app/cbv_app_base.html' %}
 {% block body_block %}
@@ -1547,9 +1599,9 @@ school_detail.html
     def __str__(self):
         return self.name
 -->
+```
 
-
-#CRUD views:
+## CRUD views:
 
 (Create Retrieve Update Delete)
 

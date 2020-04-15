@@ -1,4 +1,4 @@
-#<-Django-> #
+Markup :  #<-Django-> #
 ##Set up Django Project ->##
 while installing django -  it installs command line tool django-admin
 to create Django project

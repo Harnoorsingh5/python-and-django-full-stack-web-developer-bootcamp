@@ -1,0 +1,26 @@
+h1{
+    text-align: center;
+    font-family: 'Baloo Thambi 2', cursive;
+}
+td{
+    height: 200px;
+    width: 100px;
+}
+.palette{
+    margin: auto;
+}
+#one{
+    background-color: #D82753;
+}
+#two{
+    background-color: #F76FAA;
+}
+#three{
+    background-color: #753F84;
+}   
+#four{
+    background-color: #18C99A;
+}
+#five{
+    background-color: #A6D6F4;
+}

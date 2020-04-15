@@ -1,0 +1,7 @@
+.game button{
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+    background-color: rgb(128, 128, 128);
+    border: 3px solid black;
+}

@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+{% extends 'basicapp/base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        {% if registered %}
+            <h1 class="display-4"> Thank you for registering! <h1>
+            <hr class="my-4">
+        {% else %}
+            <h1 class="display-4"> Register here! <h1>
+            <h3 class="display-6"> Fill out form! </h3>
+            <hr class="my-4">
+            <form class="form-group" method="post">
+                {% csrf_token %}
+                {{ user_form.as_p }}
+                {{ profile_form.as_p }}
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+
+        {% endif %}
+    </div>
+{% endblock %}

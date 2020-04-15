@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HOME</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-4"> Welcome! </h1>
+                <hr class="my-4">
+                <p class="lead">{{add_me}}</p>
+                <a href="{% url 'basic_app:other' %}">The Other Page</a><br>
+                <a href="{% url 'index' %}">Index Page</a><br>
+                <a href="{% url 'admin:index' %}">Admin Page</a><br>
+            </div>
+        </div>
+    <body>
+</html>

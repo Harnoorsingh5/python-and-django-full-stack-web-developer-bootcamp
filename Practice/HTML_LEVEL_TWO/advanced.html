@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> TITLE </title>
+    </head>
+    <body>
+    <table border="1">
+      <thead>
+        <th>Number</th>
+        <th>Color</th>
+        <th>Country</th>
+      </thead>
+      <!--  tr is a Table Row -->
+      <tr>
+        <!-- These are table cells -->
+        <td>200</td>
+        <td>Blue</td>
+        <td>Canada</td>
+      </tr>
+      <tr>
+        <td>250</td>
+        <td>Red</td>
+        <td>India</td>
+      </tr>
+    </table>
+
+    <table border="1">
+      <thead>
+        <th>Number</th>
+        <th>Flag</th>
+        <th>GDP</th>
+      </thead>
+      <!--  tr is a Table Row -->
+      <tr>
+        <!-- These are table cells -->
+        <td>United States</td>
+        <td><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/190px-Flag_of_the_United_States.svg.png"></td>
+        <td>18,561,930</td>
+      </tr>
+      <tr>
+        <td>India</td>
+        <td><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/150px-Flag_of_India.svg.png"></td>
+        <td>2,250,990</td>
+      </tr>
+      <tr>
+        <td>United Kingdom</td>
+        <td><img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/200px-Flag_of_the_United_Kingdom.svg.png"></td>
+        <td>2,649,890</td>
+      </tr>
+    </table>
+
+    <form>
+        <h1>Log In</h1>
+        <h2>Please Input your Password and Email</h2>
+        <label>
+            Email: 
+            <input type="email" name="useremail" placeholder="Enter Text">
+        </label>
+        <label>
+            Password: 
+            <input type="password" name="password" placeholder="Enter Password">
+        </label>
+        <input type="color">
+        <br>
+        <label for="userinput">Text:</label>
+        <input type="text" id="userinput" name="input" placeholder="Enter Text Here" required>
+        <input type="submit" >
+    </form>
+
+    <h2>Hotel Feedback Form!</h1>
+
+    <form method="get">
+        <h3>Are you from inside the USA? Or outside?</h3>
+        <label for="inside">Inside:</label>
+        <input type="radio" id="inside" name="loc_choice" value="in">
+
+        <label for="outside">Outside:</label>
+        <input type="radio" id="outside" name= "loc_choice" value="out">
+
+        <h3>How was your service?</h3>
+        <select name="stars">
+            <option value="Great">3</option>
+            <option value="Okay">2</option>
+            <option value="Bad">1</option>
+        </select>
+
+        <h3>Any other Feedback?</h3>
+        <textarea name="name" rows="8" cols="80"></textarea>
+        <input type="submit" name="" value="Submit Feedback">
+    </form>
+    </body>
+</html>

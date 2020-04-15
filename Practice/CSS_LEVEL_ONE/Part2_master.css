@@ -1,0 +1,17 @@
+body{
+    background:url(https://www.gohawaii.com/sites/default/files/styles/image_gallery_bg_xl/public/hero-unit-images/11500_mauibeaches.jpg?itok=I2TvGlCa);
+}
+
+div{
+    background: blue;
+    border-color: orange;
+    border-width: 4px;
+    border-style: double;
+}
+
+p{
+    color:yellow;
+}
+span{
+    background: red;
+}

@@ -1,0 +1,26 @@
+body{
+    font-family: 'Baloo 2', cursive;
+    text-align: center;
+    background-color:#020122;
+    color: beige;
+    border:60px solid cyan ;
+    border-top: 0px;
+    border-bottom: 0px;
+    margin: 0px;
+}
+p{
+    padding: 5% 20% 0% 20%;
+}
+.userInput{
+    font-size: 1.53em;
+    margin-bottom: 20px;
+    border-radius: 25px;
+}
+#submit{
+    border-radius: 25px;
+    background: orange;
+    height: 50px;
+    width: 120px;
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+}

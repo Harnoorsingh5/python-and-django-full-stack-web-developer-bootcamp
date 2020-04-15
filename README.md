@@ -42,17 +42,16 @@ INSTALLED_APPS = [
 After all these steps->
 
 ## Step 1) Create a view 
+`code()`
 from django.shortcuts import render
 from django.http import HttpResponse
-`code()`
-def index(request):
-    return HttpResponse("Hello World!")
-`code()`
+    def index(request):
+        return HttpResponse("Hello World!")
 
-		We can pass in some html inplace of Hello World
+We can pass in some html inplace of Hello World
 
-	#Step2) In order for us to see this view on Browser, we need to map this view in urls.py file
-	
+## Step2) In order for us to see this view on Browser, we need to map this view in urls.py file
+`code()`
 from django.contrib import admin
 from django.urls import path
 from first_app import views
@@ -67,8 +66,8 @@ urlpatterns = [
 
 Final url files are shown below (we need to create a unique url file for each application) (we need to map that url file in the projects urls.py file)
 
-projects urls.py ->
-
+* projects urls.py ->
+`code()`
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
@@ -80,8 +79,8 @@ urlpatterns = [
 ]
 
 
-applications urls.py ->
-
+* applications urls.py ->
+`code()`
 from django.urls import path
 from first_app import views
 

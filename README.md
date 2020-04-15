@@ -143,26 +143,26 @@ def index(request):
     return render(request,'first_app/index.html',context=my_dict)
 ```
 
-
+```
 {{}} - text injection
 {%%} - complex injection and logic
+```
 
-	#Step4) Adding static media files (photos) or css files
+### Step4) Adding static media files (photos) or css files
   
 
-	create folder -> first_project/static/images
+* create folder -> first_project/static/images
 
-
-	add this path in settings.py file
+* add this path in settings.py file
+```
 STATIC_DIR = os.path.join(BASE_DIR,'static')
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
-
-	To load it in html file -> {% load static %}
+```
+* To load it in html file -> {% load static %}
 	Then we insert he images using -> <img src = {% static “images/pic.jpg" %} />
 
-
+```
 <!DOCTYPE html>
 {% load static %}
 <html>
@@ -178,38 +178,40 @@ STATICFILES_DIRS = [STATIC_DIR,]
         <img src = "{% static "images/Architecture.png" %}" alt="not loading"/>
     </body>
 </html>
+```
+* 
+
+# ——————————————————————
 
 
-
-#——————————————————————
-
-
-#Models: 
-We used models to incorporate a database into Django project.
-Django comes equipped with SQLite. Django works with various other DBs.
-Just need to change Engine parameter for DATABASES in settings.py file.
-To create actual model, we use a class structure inside of relevant applications models.py file.
+## Models: 
+* We used models to incorporate a database into Django project.
+* Django comes equipped with SQLite. Django works with various other DBs.
+* Just need to change Engine parameter for DATABASES in settings.py file.
+* To create actual model, we use a class structure inside of relevant applications models.py file.
+```
 django.db.models.Model
-Example of model class that will fo into models.py file of django app.
+```
+* Example of model class that will fo into models.py file of django app.
 
 
-Each class acts as a table in the database.
-inside each class we assign the column names of each table
-After setting up models we can migrate databases, this basically let’s Django do heavy lifting of creating SQL databases that corresponds to models we created.
-Django does all this with just one command ->  python manage.py migrate
-Then register the changes to your app ->  python manage.py makemigrations app_name
+* Each class acts as a table in the database.
+* inside each class we assign the column names of each table
+* After setting up models we can migrate databases, this basically let’s Django do heavy lifting of creating SQL databases that corresponds to models we created.
+* Django does all this with just one command ->  python manage.py migrate
+* Then register the changes to your app ->  python manage.py makemigrations app_name
 
-in order to use more convenient admin interface with the models, we need to register them to our application’s admin.py file
+* in order to use more convenient admin interface with the models, we need to register them to our application’s admin.py file
 
 
-Once the models and db are create we can use Django Admin interface to interact with db (which is one of key feature of Django)
-In order to fully use db and admin, we need to create a super user using -> python manage.py createsuperuser
+* Once the models and db are create we can use Django Admin interface to interact with db (which is one of key feature of Django)
+* In order to fully use db and admin, we need to create a super user using -> python manage.py createsuperuser
 
-#Step1) edit models.py file to create table
+### Step1) edit models.py file to create table
 from django.db import models
 
-# Create your models here.
-
+* Create your models here.
+```
 class Topic(models.Model):
     top_name = models.CharField(max_length=264, unique=True)
 
@@ -230,12 +232,14 @@ class AccessRecord(models.Model):
 
     def __str__(self):
         return str(self.date)
+```
 
-#Step2) To create tables we need to run few commands in sequence - 
+### Step2) To create tables we need to run few commands in sequence - 
+```
 Initiate:                           python3 manage.py migrate
 register:                       
-
-#Step3) Confirm whether it all works fine (using some shell commands)
+```
+### Step3) Confirm whether it all works fine (using some shell commands)
 open shell:                 python manage.py shell
                                       from first_app.models import Topic 
                                       print(Topic.objects.all())    ——> <QuerySet []>
@@ -243,17 +247,17 @@ open shell:                 python manage.py shell
                                      t.save() 
                                       print(Topic.objects.all())    ——> <QuerySet [<Topic: Social Network>]>
 
-#Step4) Register models to admin.py file
+### Step4) Register models to admin.py file
 from django.contrib import admin
 from first_app.modelso import Topic,Webpage,AccessRecord
-# Register your models here.
-
+* Register your models here.
+```
 admin.site.register(AccessRecord)
 admin.site.register(Webpage)
 admin.site.register(Topic)
-
-In order to configure admin.py we need to create a super user for authorization and security purpose
-
+```
+* In order to configure admin.py we need to create a super user for authorization and security purpose
+```
 python manage.py createsuperuser
 				Username (leave blank to use 'harry'): harnoor
 				Email address: harnoor.singh539@gmail.com
@@ -263,13 +267,17 @@ python manage.py createsuperuser
 				This password is too common.
 				This password is entirely numeric.
 				Bypass password validation and cr
+```
 
-#Population Script:
+## Population Script:
 We can add some dummy data in our tables using Faker library to create this script.
+```
 pip3 install Faker
 https://faker.readthedocs.io/en/master/
 create  file population_first_app.py
 	Then configure settings for this project 
+```
+```
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'first_project.settings')
 
@@ -312,25 +320,27 @@ def populate(N=5):
 if __name__ == '__main__':
     print("Populating script")
     populate(20)
+```
 
 
-#Models - Templates - Views Paradigm
-(MTV)
-idea of how to connect everything
-3 steps —>
-In the views.py file import any models that we will need to use.
-Use the view to query the model for data that we will need.
-Pass results from model to template.
-Edit the template so that it is ready to accept and display data from the model.
-Map the url to the view
+## Models - Templates - Views Paradigm
+* (MTV)
+* idea of how to connect everything
+### 3 steps —>
+* In the views.py file import any models that we will need to use.
+* Use the view to query the model for data that we will need.
+* Pass results from model to template.
+* Edit the template so that it is ready to accept and display data from the model.
+* Map the url to the view
 
-We can practice this methodology by changing what we display on front index page.
+* We can practice this methodology by changing what we display on front index page.
 To begin our understanding of this process we will start by generating a table
 
-—> starting
+### —> starting
 
-#Step1)
-Opening views.py file to connect the db
+### Step1)
+* Opening views.py file to connect the db
+```
 from django.shortcuts import render
 from django.http import HttpResponse
 from first_app.models import Topic,Webpage,AccessRecord
@@ -343,10 +353,10 @@ def index(request):
 
     # my_dict = {'insert_one': "Hello this is my view"}
     return render(request, 'first_app/index.html', context = date_dict)
+```
 
-
-
-go to index.html
+* go to index.html
+```
 <!DOCTYPE html>
 {% load static %}
 <html>
@@ -379,36 +389,42 @@ go to index.html
     </div>
     </body>
 </html>
+```
 
+## Django Forms:
 
-#Django Forms:
-
-To create forms create a forms.py file in your application folder.
-. After that call Django’s built in forms classes (very similar to creating models in Django)
-. After cresting forms.py file we need to show it in our views.py class
+*To create forms create a forms.py file in your application folder.
+* . After that call Django’s built in forms classes (very similar to creating models in Django)
+* . After cresting forms.py file we need to show it in our views.py class
+```
 		from . import forms
 		from forms import formName
 	(. indicates import from same dir)
-
-—> Three type of requests when dealing with forms:
- HTTP: Hypertext transfer protocol and is designed to enable communication between client and server
+```
+### —> Three type of requests when dealing with forms:
+* HTTP: Hypertext transfer protocol and is designed to enable communication between client and server
 	The client submits a request and server then responds to it
 	Most commonly used methods for request/ response are GET and POST
-GET - requests data from a resource
-POST - submits data to be processed to a resource
+* GET - requests data from a resource
+* POST - submits data to be processed to a resource
 
 we use CSRF - Cross Site Request Forgery token in our forms which secures the HTTP Post action that is initiated on the subsequent submission of a form.
+```
 {% csrf_token %}
+```
 
-#Step1) Create forms.py in app folder
+### Step1) Create forms.py in app folder
+```
 from django import forms
 
 class FormName(forms.Form):
     name = forms.CharField()
     email = forms.EmailField()
     text = forms.CharField(widget = forms.Textarea)
+```
 
-#Step2) Modify views.py file
+### Step2) Modify views.py file
+```
 from django.shortcuts import render
 from django.http import HttpResponse
 from basicapp import forms
@@ -434,7 +450,9 @@ def form_view(request):
 
 
     return render(request, 'basicapp/form_page.html', context={"form": form})
-#Step3) form_page.html
+```
+### Step3) form_page.html
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -456,14 +474,16 @@ def form_view(request):
         </div>
     </body>
 </html>
+```
 and adjust URLs accordingly
 
 
-#Step4) Form validations:
+### Step4) Form validations:
 We will learn three things here- Adding a check for empty fields	
 Adding a check for a bot
 Adding clean method for entire form
-a) One way of doing validations -  by using clean method
+* a) One way of doing validations -  by using clean method
+```
 from django import forms
 
 class FormName(forms.Form):
@@ -478,10 +498,11 @@ class FormName(forms.Form):
         if len(botcatcher) > 0:
             raise forms.ValidationError("GOTCHA BOT")
         return botcatcher
+```
 
 
-
-b) other way is by using Django’s in built methods:
+* b) other way is by using Django’s in built methods:
+```
 from django import forms
 from django.core import validators
 
@@ -491,14 +512,16 @@ class FormName(forms.Form):
     text = forms.CharField(widget = forms.Textarea)
 
     botcatcher = forms.CharField(required=False, widget=forms.HiddenInput, validators=[validators.MaxLengthValidator(0)])
+```
 
 
-
-c) you can also make your own custom validator:
+* c) you can also make your own custom validator:
+```
 from django import forms
 from django.core import validators
 
-# custom validator:
+#custom validator:
+
 def check_for_z(value):
     if value[0].lower() != 'z':
         raise forms.ValidationError("name need to start with z")
@@ -515,7 +538,7 @@ class FormName(forms.Form):
     #     if len(botcatcher) > 0:
     #         raise forms.ValidationError("GOTCHA BOT")
     #     return botcatcher
-
+```
 
 email check
 from django.shortcuts import render

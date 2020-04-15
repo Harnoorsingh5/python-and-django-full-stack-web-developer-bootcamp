@@ -54,6 +54,7 @@ from django.http import HttpResponse
 
 ### Step2) In order for us to see this view on Browser, we need to map this view in urls.py file
 
+```
 from django.contrib import admin
 from django.urls import path
 from first_app import views
@@ -63,13 +64,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('first_app/', include('first_app.urls')),
-]```
+]
+```
 	
 
-Final url files are shown below (we need to create a unique url file for each application) (we need to map that url file in the projects urls.py file)
+* Final url files are shown below (we need to create a unique url file for each application) (we need to map that url file in the projects urls.py file)
 
 * projects urls.py ->
-`code()`
+```
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
@@ -79,25 +81,26 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('first_app/', include('first_app.urls')),
 ]
-
+```
 
 * applications urls.py ->
-`code()`
+```
 from django.urls import path
 from first_app import views
 
 urlpatterns = [
     path('', views.index, name="index"),
 ]
-
-
+```
 
 ### Step3) Templates
-are key parts of understanding how Django really works and interacts with your website
-Contains static part of website that will always remain same
-Template Tags - with special syntax - allows us to inject dynamic content that your Django Apps views will produce, effecting the final HTML
-Firstly create a templates directory inside top level dir -> first_project/templates/first_app    - insert a file index.html in this
-After this we have let Django know of templates by editing DIR key inside of TEMPLATES dictionary in the settings.py
+* are key parts of understanding how Django really works and interacts with your website
+* Contains static part of website that will always remain same
+* Template Tags - with special syntax - allows us to inject dynamic content that your Django Apps views will produce, effecting the final HTML
+* Firstly create a templates directory inside top level dir -> first_project/templates/first_app    - insert a file index.html in this
+* After this we have let Django know of templates by editing DIR key inside of TEMPLATES dictionary in the
+* settings.py
+```
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates') 
 TEMPLATES = [
     {
@@ -114,8 +117,9 @@ TEMPLATES = [
         },
     },
 ]
-
-index.html
+```
+* index.html
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -127,15 +131,17 @@ index.html
         {{ insert_me }}
     </body>
 </html>
+```
 
-views.py
+* views.py
+```
 from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
     my_dict = {'insert_me':'Hello I am from first_app/index.html'}
     return render(request,'first_app/index.html',context=my_dict)
-
+```
 
 
 {{}} - text injection

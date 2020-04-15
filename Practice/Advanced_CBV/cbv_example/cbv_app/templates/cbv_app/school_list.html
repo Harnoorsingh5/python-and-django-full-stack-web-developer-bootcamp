@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends 'cbv_app/cbv_app_base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        <h1 class="display-4"> This is list of all schools </h1>
+        <hr class="my-4">
+        <ol>
+            {% for school in school_list %} 
+                <h2 class="display-6"> <li> <a href="{{ school.id }}">{{ school.name }}</a></li> </h2>
+            {% empty %}
+                <h2 class="display-6"> <li>No Schools yet.</li> </h2>
+            {% endfor %}
+        </ol>
+    </div>
+{% endblock %}
+<!--
+    if you don't define a primary key
+    Django give a default id as a primary key
+    "school.id ""
+-->
+<!--
+    Generally we would have used obhect.all to get the values from model
+    However, list view does it automatically
+    and makes it easy to access the records from model.
+    Like this:
+
+ -views.py
+    from django.shortcuts import render
+    from django.http import HttpResponse
+    from first_app.models import Topic,Webpage,AccessRecord
+
+    # Create your views here.
+
+    def index(request):
+        webpages_list = AccessRecord.objects.order_by('date')
+        date_dict = {'access_records': webpages_list}
+
+        # my_dict = {'insert_one': "Hello this is my view"}
+        return render(request, 'first_app/index.html', context = date_dict)
+
+- index.html
+    <div class = "recordtable">
+     {% if access_records %}
+        <table>
+            <thead>
+                <th>Site Name</th>
+                <th>Date Accessed</th>
+            </thead>
+            {% for acc in access_records %}
+            <tr>
+                <td>{{acc.name}}</td>
+                <td>{{acc.date}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+     {% else %}
+        <p>No access record found</p>
+     {% endif %}
+    </div>
+-->

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% extends 'cbv_app/cbv_app_base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        <h1 class="display-4"> This is school details </h1>
+        <hr class="my-4">
+        <h2> School Details: </h2>
+        <p> Name: {{ school.name }} </p>
+        <p> Principal: {{ school.principal }} </p>
+        <p> Location: {{ school.location }} </p>
+        <h3 class="display-6"> Student: </h3>
+            {% for student in school.students.all %}
+                <p> {{student.name}}, who is {{ student.age }} years old. </p>
+            {% empty %}
+                <h2 class="display-6"> <li>No Students yet.</li> </h2>
+            {% endfor %}
+    </div>
+{% endblock %}
+
+<!-- 
+    students.all is the related_name from Student Model defined in models.py class as shown below
+
+    class Student(models.Model):
+    name = models.CharField(max_length=256)
+    age = models.PositiveIntegerField()
+    school = models.ForeignKey(School, related_name='students', on_delete=models.CASCADE) <<- over here
+
+    def __str__(self):
+        return self.name
+-->

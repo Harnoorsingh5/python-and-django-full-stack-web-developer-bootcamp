@@ -1605,9 +1605,157 @@ urlpatterns = [
 
 (Create Retrieve Update Delete)
 
+* whenever you work with models and databases you will need to perform these four basic operations
+* Luckily Django have class based view  to simplify the entire process 
+* CreateView Class
 
+* import these libraries ->
+* in views.py
+```
+from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+```
 
+* 1st thing - How to create a new school in above example using “CreateView” class
 
+urls.py (apps’n folder)
+```
+ path('create/',views.SchoolCreateView.as_view(), name='school_create'),
+```
+views.py 
+```
+class SchoolCreateView(CreateView):
+    fields = ('name', 'principal', 'location')
+    model = models.School
+    template_name = 'cbv_app/school_form.html' 
+```
+
+* 2nd thing - Update the already create school 
+
+urls.py (apps’n folder)
+```
+path('update/<int:pk>',views.SchoolUpdateView.as_view(), name='school_update'),
+```
+views.py
+```
+class SchoolUpdateView(UpdateView):
+    fields = ('name', 'principal')
+    model = models.School
+    template_name = 'cbv_app/school_form.html'
+```
+
+* 3rd thing - Delete the already created school
+
+urls.py (apps’n folder)
+```
+path('delete/<int:pk>',views.SchoolDeleteView.as_view(), name='school_delete'),
+```
+views.py
+```
+class SchoolDeleteView(DeleteView):
+    model = models.School
+    success_url = reverse_lazy("cbv_app:school_list")
+```
+models.py 
+```
+class School(models.Model):
+
+    name = models.CharField(max_length=256)
+    principal = models.CharField(max_length=256)
+    location = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.name
+    ‘’'
+    #add this part —> it create an absolute url --No URL to redirect to.  Either provide a url or define a get_absolute_url method on the Model.
+    It is a way to provide a fallback URL whenever the form is changed or submit button is clicked on.
+    ‘''
+    def get_absolute_url(self): 
+        return reverse("cbv_app:school_details", kwargs={"pk": self.pk})
+```
+school_form.html
+```
+<!DOCTYPE html>
+{% extends 'cbv_app/cbv_app_base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        <h1 class="display-4"> 
+            {% if not form.instance.pk %} <!-- This condition check is instance of primary key is in model or not-->
+            Create School
+            {% else %}
+            Update School
+            {% endif %}
+        </h1>
+        <hr class="my-4">
+        <form class="form-group" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
+```
+school_confirm_delete.html
+```
+<!DOCTYPE html>
+{% extends 'cbv_app/cbv_app_base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        <h1 class="display-4"> Delete {{school.name}}?</h1>
+        <hr class="my-4">
+        <form class="form-group" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href = "{% url 'cbv_app:school_details' pk=school.pk %}">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
+```
+school_list.html
+```
+<!DOCTYPE html>
+{% extends 'cbv_app/cbv_app_base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        <h1 class="display-4"> This is list of all schools </h1>
+        <hr class="my-4">
+        <ol>
+            {% for school in school_list %} 
+                <h2 class="display-6"> <li> <a href="{{ school.id }}">{{ school.name }}</a></li> </h2>
+            {% empty %}
+                <h2 class="display-6"> <li>No Schools yet.</li> </h2>
+            {% endfor %}
+        </ol>
+ <p> <a class = 'btn btn-primary' href="{% url 'cbv_app:school_create' %}"> Create School </a> </p> <!— add this button for creating school—>
+    </div>
+{% endblock %}
+```
+school_detail.html
+```
+<!DOCTYPE html>
+{% extends 'cbv_app/cbv_app_base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        <h1 class="display-4"> This is school details </h1>
+        <hr class="my-4">
+        <h2> School Details: </h2>
+        <p> Name: {{ school.name }} </p>
+        <p> Principal: {{ school.principal }} </p>
+        <p> Location: {{ school.location }} </p>
+        <h3 class="display-6"> Student: </h3>
+            {% for student in school.students.all %}
+                <p> {{student.name}}, who is {{ student.age }} years old. </p>
+            {% empty %}
+                <h2 class="display-6"> <li>No Students yet.</li> </h2>
+            {% endfor %}
+        
+        <div class = "container">
+            <p> <a class = 'btn btn-warning' href="{% url 'cbv_app:school_update' pk=school.pk %}"> Update School </a> </p> <!-- added these two buttons-->
+            <p> <a class = 'btn btn-danger' href="{% url 'cbv_app:school_delete' pk=school.pk %}"> Delete </a> </p>
+        </div>
+    </div>
+{% endblock %}
+```
 
 
 

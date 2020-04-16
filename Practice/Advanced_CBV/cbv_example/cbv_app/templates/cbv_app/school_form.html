@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'cbv_app/cbv_app_base.html' %}
+{% block body_block %}
+    <div class="jumbotron">
+        <h1 class="display-4"> 
+            {% if not form.instance.pk %} <!-- This condition check is instance of primary key is in model or not-->
+            Create School
+            {% else %}
+            Update School
+            {% endif %}
+        </h1>
+        <hr class="my-4">
+        <form class="form-group" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

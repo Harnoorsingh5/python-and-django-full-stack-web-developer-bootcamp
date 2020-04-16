@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic import View, TemplateView, ListView, DetailView
+from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from cbv_app import models
+
+from django.urls import reverse_lazy
+
 # Create your views here.
 # def index(request):
 #     return render(request, 'cbv_app/index.html',context={"add_me":"Hello, this is index.html"})
@@ -37,7 +40,7 @@ class SchoolListView(ListView):
     model = models.School
     # return a list named : school_list | after changing it returns a list named : schools
 
-    # template_name = 'cbv_app/school_list.html' 
+    template_name = 'cbv_app/school_list.html' 
 
 '''
     Details view returns the list as the lower case of model name
@@ -49,3 +52,16 @@ class SchoolDetailView(DetailView):
     model = models.School
     template_name = 'cbv_app/school_detail.html' 
 
+class SchoolCreateView(CreateView):
+    fields = ('name', 'principal', 'location')
+    model = models.School
+    template_name = 'cbv_app/school_form.html' 
+
+class SchoolUpdateView(UpdateView):
+    fields = ('name', 'principal')
+    model = models.School
+    template_name = 'cbv_app/school_form.html'
+
+class SchoolDeleteView(DeleteView):
+    model = models.School
+    success_url = reverse_lazy("cbv_app:school_list")

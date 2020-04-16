@@ -23,6 +23,10 @@ urlpatterns = [
     # path('', views.IndexView.as_view()),
     path('',views.SchoolListView.as_view(), name='school_list'),
     path('<int:pk>/',views.SchoolDetailView.as_view(), name='school_details'),
+    path('create/',views.SchoolCreateView.as_view(), name='school_create'),
+    path('update/<int:pk>',views.SchoolUpdateView.as_view(), name='school_update'),
+    path('delete/<int:pk>',views.SchoolDeleteView.as_view(), name='school_delete'),
+
 ]
 '''
     <int:pk>/ means that that it use the primary key of that model as the path to open the detail view of that particular item in list

@@ -14,6 +14,11 @@
             {% empty %}
                 <h2 class="display-6"> <li>No Students yet.</li> </h2>
             {% endfor %}
+        
+        <div class = "container">
+            <p> <a class = 'btn btn-warning' href="{% url 'cbv_app:school_update' pk=school.pk %}"> Update School </a> </p>
+            <p> <a class = 'btn btn-danger' href="{% url 'cbv_app:school_delete' pk=school.pk %}"> Delete </a> </p>
+        </div>
     </div>
 {% endblock %}
 

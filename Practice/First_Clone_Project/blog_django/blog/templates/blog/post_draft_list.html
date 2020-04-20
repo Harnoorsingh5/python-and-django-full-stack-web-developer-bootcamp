@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends 'blog/base.html' %}
+{% block  body_block %}
+    <div class ="centerstage">
+        {% for post in post_list %}
+            <div class="post">
+                <p class="date"> Created: {{ post.create_date|date:'d-m-Y' }}</p>
+                <h1> <a href="{% url 'blog:post_detail' pk=post.pk %}"> {{ post.title }} </a> </h1>
+                <p> {{ post.text|truncatechars:200|safe }} </p>
+            </div>
+        {% empty %}
+            <h2 class="display-6"> No posts yet </h2>
+        {% endfor %}
+    </div>
+{% endblock  %}
